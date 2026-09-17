@@ -45,7 +45,7 @@ spec:
             port: 6379
           initialDelaySeconds: 15
           periodSeconds: 20
-  volumeClaimTemplates:
+  volumeClaimTemplates: gp2
   - metadata:
       name: data
     spec:
