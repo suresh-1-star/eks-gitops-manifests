@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis-slave
+  namespace: default
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  serviceName: "redis-slave"
+  replicas: 2
+  selector:
+    matchLabels:
+      app: redis
+      tier: slave
+  template:
+    metadata:
+      labels:
+        app: redis
+        tier: slave
+    spec:
+      containers:
+      - name: redis
+        image: redis:7.2.4-alpine
+        command:
+        - redis-server
+        - --replicaof
+        - redis-master-0.redis-master.default.svc.cluster.local
+        - "6379"
+        - --maxmemory
+        - 256mb
+        - --maxmemory-policy
+        - allkeys-lru
+        ports:
+        - containerPort: 6379
+          name: redis
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        readinessProbe:
+          tcpSocket:
+            port: 6379
+          initialDelaySeconds: 5
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-slave
+  namespace: default
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  ports:
+  - port: 6379
+    targetPort: 6379
+  selector:
+    app: redis
+    tier: slave
