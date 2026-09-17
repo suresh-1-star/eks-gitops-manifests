@@ -21,15 +21,7 @@ spec:
       containers:
       - name: redis
         image: redis:7.2.4-alpine
-        command:
-        - redis-server
-        - --replicaof
-        - redis-master-0.redis-master.default.svc.cluster.local
-        - "6379"
-        - --maxmemory
-        - 256mb
-        - --maxmemory-policy
-        - allkeys-lru
+        command: ["redis-server", "--replicaof", "redis-master-0.redis-master.default.svc.cluster.local", "6379", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
         ports:
         - containerPort: 6379
           name: redis

@@ -21,14 +21,7 @@ spec:
       containers:
       - name: redis
         image: redis:7.2.4-alpine
-        command:
-        - redis-server
-        - --maxmemory
-        - 256mb
-        - --maxmemory-policy
-        - allkeys-lru
-        - --appendonly
-        - yes
+        command: ["redis-server", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru", "--appendonly", "yes"]
         ports:
         - containerPort: 6379
           name: redis
