@@ -9,4 +9,4 @@ spec:
     targetPort: 6379
   selector:
     app: redis
-    tier: replica  # adjust matching selector labels from your redis-slave.yaml
+    tier: slave  # adjust matching selector labels from your redis-slave.yaml
