@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: telemetry-service
+  namespace: argocd
+  labels:
+    tier: application
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/suresh-1-star/eks-gitops-manifests.git'
+    targetRevision: HEAD
+    path: kubernetes/telemetry
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: telemetry
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
