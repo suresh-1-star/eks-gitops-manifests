@@ -13,7 +13,9 @@ spec:
       labels:
         app: telemetry-api
     spec:
+      serviceAccountName: telemetry-sa   # <--- 1. Link IRSA ServiceAccount here
       containers:
+<<<<<<< HEAD
       - name: api
         image: hashicorp/http-echo:1.0.0
         args: ["-text=telemetry-accepted-202"]
@@ -44,3 +46,25 @@ spec:
             port: 5678
           initialDelaySeconds: 5
           periodSeconds: 10
+=======
+        - name: api
+          image: 045064752559.dkr.ecr.ap-south-1.amazonaws.com/telemetry-api:v1.0.0   # <--- 2. Update to real ECR image tag
+          env:                           # <--- 3. Inject SQS target URL
+            - name: SQS_QUEUE_URL
+              value: "https://sqs.ap-south-1.amazonaws.com/045064752559/telemetry-events-queue"
+          ports:
+            - containerPort: 5678
+          resources:
+            requests:
+              cpu: 200m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5678
+            initialDelaySeconds: 3
+            periodSeconds: 5
+>>>>>>> ee30554 (fix: update deployment resources and probe spec)
