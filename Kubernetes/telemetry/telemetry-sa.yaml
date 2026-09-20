@@ -1,0 +1,7 @@
+apiVersion: v1
+Kind: ServiceAccount
+metadata:
+  name: telemetry-sa
+  namespace: telemetry
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::045064752559:role/telemetry-irsa-role
