@@ -31,13 +31,11 @@ spec:
             memory: 128Mi
         readinessProbe:
           tcpSocket:
-            path: /health
-            port: 8080
+          port: 8080
           initialDelaySeconds: 3
           periodSeconds: 5
         livenessProbe:
           tcpSocket:
-            path: /health
-            port: 8080
+          port: 8080
           initialDelaySeconds: 5
           periodSeconds: 10
