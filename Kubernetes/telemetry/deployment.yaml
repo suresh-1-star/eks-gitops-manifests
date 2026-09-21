@@ -16,7 +16,7 @@ spec:
       serviceAccountName: telemetry-sa
       containers:
       - name: api
-        image: 045064752559.dkr.ecr.ap-south-1.amazonaws.com/telemetry-api:v1.0.0
+        image: 045064752559.dkr.ecr.ap-south-1.amazonaws.com/telemetry-api:09e8c4683092abb44592f6dcf821c326720e896e
         env:
           - name: SQS_QUEUE_URL
             value: "https://sqs.ap-south-1.amazonaws.com/045064752559/telemetry-events-queue"
